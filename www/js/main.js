@@ -1,4 +1,4 @@
-// initialize
+
 window.onload = function() {
     // add action to the file input
     var input = document.getElementById('file');
@@ -13,14 +13,16 @@ window.onload = function() {
     decodeButton.addEventListener('click', decode);
 };
 
-// artificially limit the message size
+
 var maxMessageSize = 1000;
 
-// put image in the canvas and display it
+// put image in the canvas and display
+
 var importImage = function(e) {
     var reader = new FileReader();
 
     reader.onload = function(event) {
+
         // set the preview
         document.getElementById('preview').style.display = 'block';
         document.getElementById('preview').src = event.target.result;
@@ -48,6 +50,7 @@ var importImage = function(e) {
 };
 
 // encode the image and save it
+
 var encode = function() {
     var message = document.getElementById('message').value;
     var password = document.getElementById('password').value;
@@ -91,7 +94,8 @@ var encode = function() {
 
 
 
-// decode the image and display the contents if there is anything
+// decode the image and display the contents 
+
 var decode = function() {
     var password = document.getElementById('password2').value;
     var passwordFail = 'Password is incorrect or there is nothing here.';
@@ -149,17 +153,16 @@ var decode = function() {
     }
 };
 
-// returns a 1 or 0 for the bit in 'location'
 var getBit = function(number, location) {
    return ((number >> location) & 1);
 };
 
 // sets the bit in 'location' to 'bit' (either a 1 or 0)
+
 var setBit = function(number, location, bit) {
    return (number & ~(1 << location)) | (bit << location);
 };
 
-// returns an array of 1s and 0s for a 2-byte number
 var getBitsFromNumber = function(number) {
    var bits = [];
    for (var i = 0; i < 16; i++) {
@@ -169,6 +172,7 @@ var getBitsFromNumber = function(number) {
 };
 
 // returns the next 2-byte number
+
 var getNumberFromBits = function(bytes, history, hash) {
     var number = 0, pos = 0;
     while (pos < 16) {
@@ -181,6 +185,7 @@ var getNumberFromBits = function(bytes, history, hash) {
 };
 
 // returns an array of 1s and 0s for the string 'message'
+
 var getMessageBits = function(message) {
     var messageBits = [];
     for (var i = 0; i < message.length; i++) {
@@ -190,7 +195,7 @@ var getMessageBits = function(message) {
     return messageBits;
 };
 
-// gets the next location to store a bit
+
 var getNextLocation = function(history, hash, total) {
     var pos = history.length;
     var loc = Math.abs(hash[pos % hash.length] * (pos + 1)) % total;
@@ -208,13 +213,19 @@ var getNextLocation = function(history, hash, total) {
     }
 };
 
-// encodes the supplied 'message' into the CanvasPixelArray 'colors'
+// encodes the supplied 'message' into the CanvasPixelArray 
+
+
+'colors'
 var encodeMessage = function(colors, hash, message) {
+
     // make an array of bits from the message
+
     var messageBits = getBitsFromNumber(message.length);
     messageBits = messageBits.concat(getMessageBits(message));
 
-    // this will store the color values we've already modified
+  
+
     var history = [];
 
     // encode the bits into the pixels
@@ -237,24 +248,28 @@ var encodeMessage = function(colors, hash, message) {
 };
 
 // returns the message encoded in the CanvasPixelArray 'colors'
+
 var decodeMessage = function(colors, hash) {
     // this will store the color values we've already read from
     var history = [];
 
     // get the message size
+
     var messageSize = getNumberFromBits(colors, history, hash);
 
-    // exit early if the message is too big for the image
+    // exit if the message is too big for the image
+
     if ((messageSize + 1) * 16 > colors.length * 0.75) {
         return '';
     }
 
-    // exit early if the message is above an artificial limit
+    // exit if the message is above an artificial limit
     if (messageSize === 0 || messageSize > maxMessageSize) {
         return '';
     }
 
     // put each character into an array
+
     var message = [];
     for (var i = 0; i < messageSize; i++) {
         var code = getNumberFromBits(colors, history, hash);
@@ -262,5 +277,6 @@ var decodeMessage = function(colors, hash) {
     }
 
     // the characters should parse into valid JSON
+
     return message.join('');
 };
