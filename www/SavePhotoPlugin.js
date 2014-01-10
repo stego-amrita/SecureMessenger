@@ -16,5 +16,6 @@ window.savephotoplugin = function(canvasEl,mimeType,appVersion,callback){
 							canvasProps.ypos,
 							canvasProps.width,
 							canvasProps.height,
-							canvasProps.screenWidth,appVersion]);	
+							canvasProps.screenWidth,appVersion]);
+							alert("photo plugin activated !");
 }
