@@ -11,6 +11,7 @@
     <description>
         Application for hiding data inside an image.
     </description>
+    <plugin name="SavePhotoPlugin" value="org.apache.cordova.plugin.SavePhotoPlugin"/>
 
        <!--
         Enable individual API permissions here.
