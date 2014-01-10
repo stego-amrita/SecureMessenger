@@ -81,7 +81,12 @@ var encode = function() {
 
     // view the new image
     alert('Done! When the image appears, save and share it with someone.');
-    window.location = canvas.toDataURL();
+    // window.location = canvas.toDataURL();
+    //var canvas = document.getElementById("your_canvas_id");
+    window.savephotoplugin(canvas,"image/png",device.version,function(val){ 
+  //returns you the saved path in val	
+		alert("Photo Saved: " + val);	
+    });
 };
 
 
